@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+<head>
+	<title>Sockets</title>
+	<script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+</head>
+<body>
+	<div class="container">
+		<input type="text" plaseholder="Enter your name" id="nameInput">
+		<input type="button" value="ok" id="nameButton">
+	</div>
+	<ul id="messages"></ul>
+	<div class="container">
+		<textarea  id="text" cols="30" rows="10"></textarea>
+		<input type="button" id="textSubmit" value="Send">
+	</div>
+
+	<script type="text/javascript">
+			
+		$(document).ready( function () {
+
+			var userName = $('#nameInput'), 
+				nameButton = $('#nameButton'),
+				textSubmit = $('#textSubmit'), 
+				messages = $('#messages'),
+				text = $('#text'),
+				
+				socket = io.connect();
+
+				nameButton.on("click", function() {
+					var USname = userName.val() || "Unknown";
+				})
+				
+				textSubmit.on("click", function () {
+				var USname = userName.val() || "Unknown";
+				var data = {
+					name: USname,
+					message : text.val()
+				}
+				text.val('');
+
+				socket.emit('chat message', data);
+			});
+			
+			socket.on('chat history', function (msg){
+				for (var i in msg) {
+					if (msg.hasOwnProperty(i)) {
+						messages.append($('<li>').text(msg[i].name + ": " + msg[i].message));
+					}	
+				}
+			});
+
+			socket.on('chat message', function (msg) {
+				messages.append($('<li>').text(msg.name + ": " + msg.message));	
+			})
+		})	
+		</script>
+</body>
+</html>

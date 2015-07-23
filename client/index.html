@@ -7,14 +7,60 @@
 </head>
 <body>
 	<div class="container">
-		<input type="text" plaseholder="Enter your name" id="nameInput">
-		<input type="button" value="ok" id="nameButton">
+		<h1 id='title'>Chat by web sockets</h1>
+		<div class='nameForm'>
+			<input type="text" placeholder="Enter your name" id="nameInput">
+			<input type="button" value="ok" id="nameButton">
+		</div>
+		<ul id="messages"></ul>
+		<div class="messageForm">
+			<textarea  id="text" cols="30" rows="10"></textarea>
+			<input type="button" id="textSubmit" value="Send">
+		</div>
 	</div>
-	<ul id="messages"></ul>
-	<div class="container">
-		<textarea  id="text" cols="30" rows="10"></textarea>
-		<input type="button" id="textSubmit" value="Send">
-	</div>
+
+	<style type="text/css">
+		body {
+			font-family: sans-serif;
+			background-color: #fff;
+		}
+		.container {
+			width:30%;
+			margin: 0 auto;
+		}
+		.container input, textarea, ul, li{
+			display: block;
+			width: 100%;
+			margin-top: 20px;
+			text-align: center;
+		}
+		.container input[type='button'] {
+			padding: 10px;
+			border: none;
+		}
+		#title, input[type='button'] {
+			text-align: center;
+			background-color: #ff6666;
+			color: #fff;
+			padding: 15px;
+			text-transform: uppercase;
+		}
+		#messages {
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		#messages li {
+			padding: 10px 0;
+			text-transform: uppercase;
+			margin: 5px 0;
+			background: #ffc0cb;
+		}
+		#messages li:nth-child(odd) {
+			background: #81d8d0;
+		}
+
+	</style>
 
 	<script type="text/javascript">
 			
@@ -55,6 +101,6 @@
 				messages.append($('<li>').text(msg.name + ": " + msg.message));	
 			})
 		})	
-		</script>
+	</script>
 </body>
 </html>
